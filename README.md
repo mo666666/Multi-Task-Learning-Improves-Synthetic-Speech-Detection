@@ -1,7 +1,7 @@
 # Multi-Task-Learning-Improves-Synthetic-Speech-Detection
 This code is for our submission to 2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP).
-## Pretrained Checkpoint
-
+## Checkpoint Download
+[Google Drive](https://drive.google.com/drive/folders/15vwSnGGHgMkwLQso09RYvXWg7qg9zqge?usp=sharing)
 
 ## Cite
 @inproceedings{mo2022multi,</br>
