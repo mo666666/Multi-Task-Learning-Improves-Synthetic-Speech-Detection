@@ -1,13 +1,23 @@
 # Multi-Task-Learning-Improves-Synthetic-Speech-Detection
 This code is for our accepted [manuscript](https://ieeexplore.ieee.org/abstract/document/9746059) to 2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP).
-## Environment
-**Data Processing**</br>
-[Matlab](https://ww2.mathworks.cn/products/matlab.html) is required.
 
-**Training**</br>
- ```pip install -r requirement.txt``` 
+## Data Processing
+Downloading the [ASVspoof 2019 Logic Access](https://www.asvspoof.org/database) Dataset.</br>
+[Matlab](https://ww2.mathworks.cn/products/matlab.html) for data preprocessing.</br>
+Edit *./extract_feature/process_LA_data.m* according to the absolute path of the dataset.
+ ```
+ cd extract_feature
+ CUDA_VISIBLE_DEVICES=0 /data/users/yangli/Matlab/bin/matlab -nodesktop -nosplash -r process_LA_data.m
+ ``` 
  
-## Checkpoint Download
+ ## Training and Evaluation
+ Install Python packages for training and evaluation:</br>
+ ```
+ pip install -r requirement.txt
+ ``` 
+
+ 
+## Checkpoint Downloading
 [Google Drive](https://drive.google.com/drive/folders/15vwSnGGHgMkwLQso09RYvXWg7qg9zqge?usp=sharing)
 
 ## Cite
