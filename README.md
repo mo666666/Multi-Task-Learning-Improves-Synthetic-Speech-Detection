@@ -11,7 +11,7 @@ Edit *./extract_feature/process_LA_data.m* according to the absolute path of the
  ``` 
  
  ## Training and Evaluation
- Install Python packages for training and evaluation:</br>
+ Install Python packages:</br>
  ```
  pip install -r requirement.txt
  ``` 
