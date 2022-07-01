@@ -21,11 +21,13 @@ Edit *./extract_feature/process_LA_data.m* according to the absolute path of the
 [Google Drive](https://drive.google.com/drive/folders/15vwSnGGHgMkwLQso09RYvXWg7qg9zqge?usp=sharing)
 
 ## Cite
-@inproceedings{mo2022multi,</br>
-  &emsp;title={Multi-Task Learning Improves Synthetic Speech Detection},</br>
-  &emsp;author={Mo, Yichuan and Wang, Shilin},</br>
-  &emsp;booktitle={ICASSP 2022-2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},</br>
-  &emsp;pages={6392--6396},</br>
-  &emsp;year={2022},</br>
-  &emsp;organization={IEEE}</br>
+```
+@inproceedings{mo2022multi,
+  title={Multi-Task Learning Improves Synthetic Speech Detection},
+  author={Mo, Yichuan and Wang, Shilin},
+  booktitle={ICASSP 2022-2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
+  pages={6392--6396},
+  year={2022},
+  organization={IEEE}
 }
+```
