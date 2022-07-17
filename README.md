@@ -12,11 +12,17 @@ Edit *./extract_feature/process_LA_data.m* according to the absolute path of the
  python reload_data.py
  ``` 
  
- ## Training and Evaluation
+ ## Training
  Install required Python packages:</br>
  ```
  pip install -r requirement.txt
  ``` 
+ ## Evaluation
+ An example: 
+ ```
+ CUDA_VISIBLE_DEVICES=0,1 python3 test.py -m ./models/ocsoftmax_spk_00005_recon_04_fake_0003_0001  -l ocsoftmax --gpu 0 -f /data/users/yangli/AIR-ASVspoof-master/LAfeatures/
+ ```
+  For details, please refer to [test.py]().
 
  
 ## Checkpoint Downloading
