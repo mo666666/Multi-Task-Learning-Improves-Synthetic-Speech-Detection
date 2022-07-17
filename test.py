@@ -149,9 +149,5 @@ if __name__ == "__main__":
     parser.add_argument("--gpu", type=str, help="GPU index", default="0")
     parser.add_argument('-f', "--path_to_features", type=str, help="path to the feature file", default="/data/users/yangli/AIR-ASVspoof-master/")
     args = parser.parse_args()
-    # os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
     args.device = torch.device("cuda:{:d}".format(int(args.gpu)) if torch.cuda.is_available() else "cpu")
     test(args.model_dir, args.loss, args.device, args.path_to_features)
-    # eer_cm_lst, min_tDCF_lst = test_individual_attacks(os.path.join(args.model_dir, 'checkpoint_cm_score.txt'))
-    # print(eer_cm_lst)
-    # print(min_tDCF_lst)
