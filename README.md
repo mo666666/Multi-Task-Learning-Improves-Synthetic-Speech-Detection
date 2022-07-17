@@ -17,22 +17,22 @@ Edit *./extract_feature/process_LA_data.m* according to the absolute path of the
  ```
  pip install -r requirement.txt
  ``` 
- Use our multi-task learning system to train a synthetic speech detection network.
+ Use our multi-task learning methods to train a synthetic speech detection network (Taking oc-softmax loss function as an example.).
  **vanilla**
  ```
- 
+ CUDA_VISIBLE_DEVICES=0,1 python3 train.py --add_loss ocsoftmax -o  ./models/ocsoftmax_vanilla -f /data/users/yangli/AIR-ASVspoof-master/LAfeatures/
  ```
  **+bonafide speech reconstruction**
   ```
- 
+ CUDA_VISIBLE_DEVICES=0,1 python3 train.py --add_loss ocsoftmax -o  ./models/ocsoftmax_recon_04 -f /data/users/yangli/AIR-ASVspoof-master/LAfeatures/ --S1 --lambda_r 0.04
  ```
  **+spoofing voice conversion**
   ```
- 
+ CUDA_VISIBLE_DEVICES=0,1 python3 train.py --add_loss ocsoftmax -o  ./models/ocsoftmax_conver_0003 -f /data/users/yangli/AIR-ASVspoof-master/LAfeatures/ --S2 --lambda_c 0.0003
  ```
  **+speaker classification**
   ```
- 
+ CUDA_VISIBLE_DEVICES=0,1 python3 train.py --add_loss ocsoftmax -o  ./models/ocsoftmax_class_00005 -f /data/users/yangli/AIR-ASVspoof-master/LAfeatures/ --S3 --lambda_m 0.00005
  ```
  ## Evaluation
  An example: 
