@@ -17,7 +17,7 @@ Edit *./extract_feature/process_LA_data.m* according to the absolute path of the
  ```
  pip install -r requirement.txt
  ``` 
- Use our multi-task learning methods to train a synthetic speech detection network (Taking oc-softmax loss function as an example.).
+ Use our multi-task learning methods to train a synthetic speech detection network (Taking oc-softmax loss function as an example.).</br>
  **vanilla**
  ```
  CUDA_VISIBLE_DEVICES=0,1 python3 train.py --add_loss ocsoftmax -o  ./models/ocsoftmax_vanilla -f /data/users/yangli/AIR-ASVspoof-master/LAfeatures/
@@ -34,10 +34,15 @@ Edit *./extract_feature/process_LA_data.m* according to the absolute path of the
   ```
  CUDA_VISIBLE_DEVICES=0,1 python3 train.py --add_loss ocsoftmax -o  ./models/ocsoftmax_class_00005 -f /data/users/yangli/AIR-ASVspoof-master/LAfeatures/ --S3 --lambda_m 0.00005
  ```
+ **Combining all auxillary subtasks**
+ ```
+ CUDA_VISIBLE_DEVICES=0,1 python3 train.py --add_loss ocsoftmax -o  ./models/ocsoftmax_class_00005_recon_04_conver_0003 -f /data/users/yangli/AIR-ASVspoof-master/LAfeatures/ --S3 --lambda_m 0.00005 --S1 --lambda_r 0.04 --S2 --lambda_c 0.0003
+ ```
+ 
  ## Evaluation
  An example: 
  ```
- CUDA_VISIBLE_DEVICES=0,1 python3 test.py -m ./models/ocsoftmax_spk_00005_recon_04_fake_0003_0001  -l ocsoftmax --gpu 0 -f /data/users/yangli/AIR-ASVspoof-master/LAfeatures/
+ CUDA_VISIBLE_DEVICES=0,1 python3 test.py -m ./models/ocsoftmax_class_00005_recon_04_conver_0003  -l ocsoftmax --gpu 0 -f /data/users/yangli/AIR-ASVspoof-master/LAfeatures/
  ```
   For details, please refer to [test.py](https://github.com/mo666666/Multi-Task-Learning-Improves-Synthetic-Speech-Detection/blob/main/test.py).
 
@@ -45,7 +50,7 @@ Edit *./extract_feature/process_LA_data.m* according to the absolute path of the
 ## Checkpoint Downloading
 [Google Drive](https://drive.google.com/drive/folders/15vwSnGGHgMkwLQso09RYvXWg7qg9zqge?usp=sharing)
 
-## Cite
+## Cite this
 ```
 @inproceedings{mo2022multi,
   title={Multi-Task Learning Improves Synthetic Speech Detection},
