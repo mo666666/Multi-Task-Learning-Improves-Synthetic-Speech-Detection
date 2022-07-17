@@ -22,7 +22,7 @@ Edit *./extract_feature/process_LA_data.m* according to the absolute path of the
  ```
  CUDA_VISIBLE_DEVICES=0,1 python3 test.py -m ./models/ocsoftmax_spk_00005_recon_04_fake_0003_0001  -l ocsoftmax --gpu 0 -f /data/users/yangli/AIR-ASVspoof-master/LAfeatures/
  ```
-  For details, please refer to [test.py]().
+  For details, please refer to [test.py](https://github.com/mo666666/Multi-Task-Learning-Improves-Synthetic-Speech-Detection/blob/main/test.py).
 
  
 ## Checkpoint Downloading
