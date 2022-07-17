@@ -17,6 +17,23 @@ Edit *./extract_feature/process_LA_data.m* according to the absolute path of the
  ```
  pip install -r requirement.txt
  ``` 
+ Use our multi-task learning system to train a synthetic speech detection network.
+ **vanilla**
+ ```
+ 
+ ```
+ **+bonafide speech reconstruction**
+  ```
+ 
+ ```
+ **+spoofing voice conversion**
+  ```
+ 
+ ```
+ **+speaker classification**
+  ```
+ 
+ ```
  ## Evaluation
  An example: 
  ```
