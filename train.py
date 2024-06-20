@@ -21,11 +21,10 @@ def initParams():
 
     # Data folder prepare
     parser.add_argument("-a", "--access_type", type=str, help="LA or PA", default='LA')
-    # parser.add_argument("-d", "--path_to_database", type=str, help="dataset path", default='/data/neil/DS_10283_3336/')
     parser.add_argument("-f", "--path_to_features", type=str, help="features path",
-                        default='/data/users/yangli/AIR-ASVspoof-master/LAfeatures/')
+                        default='./AIR-ASVspoof-master/LAfeatures/')
     parser.add_argument("-p", "--path_to_protocol", type=str, help="protocol path",
-                        default='/data/users/yangli/LA/ASVspoof2019_LA_cm_protocols/')
+                        default='./LA/ASVspoof2019_LA_cm_protocols/')
     parser.add_argument("-o", "--out_fold", type=str, help="output folder", required=True,
                         default='./models/Re-ocsoftmax_ad/')
 
@@ -101,9 +100,6 @@ def initParams():
     args.cuda = torch.cuda.is_available()
     print('Cuda device available: ', args.cuda)
     args.device = torch.device("cuda:0")
-    # if int(args.gpu) == 5:
-    #     args.device = torch.device("cpu")
-
     return args
 
 
@@ -157,9 +153,7 @@ def train(args):
     valDataLoader = DataLoader(validation_set, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers,
                                collate_fn=validation_set.collate_fn)
 
-    # feat, _, _, _ = training_set[29]
-    # print("Feature shape", feat.shape)
-
+    
     criterion = nn.CrossEntropyLoss()
 
     if args.add_loss == "amsoftmax":
@@ -194,18 +188,17 @@ def train(args):
             loss1 = criterion(lfcc_outputs, labels)
             if args.S3:
                 speaker = speaker.to(args.device)
-                index = (labels == 1).nonzero().squeeze()
+                index = (labels == 0).nonzero().squeeze()
                 feature_select = feats.index_select(0, index)
                 label_select_for_classify = speaker.index_select(0,index)
                 classifier_optimizer.zero_grad()
                 classify_result = norm_classifier(feature_select)
                 loss_speaker_norm = criterion(classify_result,label_select_for_classify)
-                # print(label_select_for_classify)
                 loss_speaker_norm = loss_speaker_norm*args.lambda_m
 
 
             if args.S2 and args.add_loss == "softmax":
-                index = (labels == 0).nonzero().squeeze()
+                index = (labels == 1).nonzero().squeeze()
                 lfcc_select = lfcc.index_select(0,index)
                 re_ad = CA(lfcc_select)
                 feats_ad, lfcc_outputs_ad = lfcc_model(re_ad)
@@ -219,7 +212,7 @@ def train(args):
                     lfcc_loss = lfcc_loss+loss_speaker_norm
 
             if args.S1:
-                index = (labels == 1).nonzero().squeeze()
+                index = (labels == 0).nonzero().squeeze()
                 feats_select = feats.index_select(0, index)
                 lfcc_re = inverse_model(feats_select)
                 # reconstruction_loss = torch.nn.L1Loss()
@@ -237,7 +230,7 @@ def train(args):
 
             if args.add_loss == "ocsoftmax":
                 if args.S2:
-                    index = (labels == 0).nonzero().squeeze()
+                    index = (labels == 1).nonzero().squeeze()
                     lfcc_select = lfcc.index_select(0, index)
                     re_ad = CA(lfcc_select)
                     feats_ad, lfcc_outputs_ad = lfcc_model(re_ad)
@@ -263,7 +256,7 @@ def train(args):
 
             if args.add_loss == "amsoftmax":
                 if args.S2:
-                    index = (labels == 0).nonzero().squeeze()
+                    index = (labels == 1).nonzero().squeeze()
                     lfcc_select = lfcc.index_select(0,index)
                     re_ad = CA(lfcc_select)
                     feats_ad, lfcc_outputs_ad = lfcc_model(re_ad)
@@ -290,19 +283,18 @@ def train(args):
             if args.S2:
                 alpha = args.delta
                 re_con_struct =  torch.nn.MSELoss()
-                index = (labels == 0).nonzero().squeeze()
+                index = (labels == 1).nonzero().squeeze()
                 lfcc_select = lfcc.index_select(0,index)
                 re_ad = CA(lfcc_select)
                 feats_ad, lfcc_outputs_ad = lfcc_model(re_ad)
                 loss_recon = re_con_struct(re_ad, lfcc_select)
-                # loss_ad = criterion(lfcc_outputs_ad, labels.index_select(0, index).fill_(1))
                 if args.add_loss == "softmax":
-                    loss_ad = criterion(lfcc_outputs_ad, labels.index_select(0, index).fill_(1))
+                    loss_ad = criterion(lfcc_outputs_ad, labels.index_select(0, index).fill_(0))
                 if args.add_loss == "ocsoftmax":
-                    loss_ad,_ = ocsoftmax(feats_ad, labels.index_select(0, index).fill_(1))
+                    loss_ad,_ = ocsoftmax(feats_ad, labels.index_select(0, index).fill_(0))
                 if args.add_loss == "amsoftmax":
-                    outputs_ad, moutputs_adv_G = amsoftmax_loss(feats_ad, labels.index_select(0, index).fill_(1))
-                    loss_ad = criterion(moutputs_adv_G, labels.index_select(0, index).fill_(1))
+                    outputs_ad, moutputs_adv_G = amsoftmax_loss(feats_ad, labels.index_select(0, index).fill_(0))
+                    loss_ad = criterion(moutputs_adv_G, labels.index_select(0, index).fill_(0))
                 loss_for_G = alpha*loss_ad+loss_recon
                 CA_optimizer.zero_grad()
                 loss_for_G.backward()
